@@ -9,6 +9,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import Badge from '@material-ui/core/Badge';
 import Item from './Item/Item';
 import Cart from './Cart/Cart';
+import {Context} from './contexts/Context';
 
 // Styles
 import { Wrapper, StyledButton } from './App.styles';
@@ -40,7 +41,7 @@ const App = () => {
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((acc: number, item) => acc + item.amount, 0);
 
-  const handleAddToCart = (clickedItem: CartItemType) => {
+  const addToCart = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       // if already in cart
       const isAlredayPresent = prev.find(item => item.id === clickedItem.id);
@@ -55,7 +56,7 @@ const App = () => {
     })
   };
 
-  const handleRemoveFromCart = (id: number) => {
+  const removeFromCart = (id: number) => {
     setCartItems(prev =>
       prev.reduce((acc, item) => {
         if (item.id === id) {
@@ -80,13 +81,11 @@ const App = () => {
   }
 
   return (
+    <Context.Provider value={{cartItems, addToCart, removeFromCart}}>
     <Wrapper>
       {/* RIGHT SIDE CART STARTS */}
       <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
-        <Cart
-          cartItems={cartItems}
-          addToCart={handleAddToCart}
-          removeFromCart={handleRemoveFromCart} />
+        <Cart />
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalItems(cartItems)} color='error'>
@@ -98,11 +97,12 @@ const App = () => {
       <Grid container spacing={3}>
         {data?.map(item => (
           <Grid item key={item.id} xs={12} sm={4}>
-            <Item item={item} handleAddToCart={handleAddToCart} />
+            <Item item={item}/>
           </Grid>
         ))}
       </Grid>
     </Wrapper>
+    </Context.Provider>
   );
 }
 

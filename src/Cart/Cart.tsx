@@ -2,18 +2,13 @@ import CartItem from '../CartItem/CartItem';
 
 import { Wrapper } from './Cart.styles';
 import { CartItemType } from '../App';
-import React from 'react';
+import React, {useContext} from 'react';
+import {Context} from '../contexts/Context';
 
-type CartProps = {
-    cartItems: CartItemType[];
-    addToCart: (clickedItem: CartItemType) => void;
-    removeFromCart: (id: number) => void;
-};
-
-const Cart: React.FC<CartProps> = ({ cartItems, addToCart, removeFromCart }: CartProps) => {
+const Cart: React.FC = () => {
     const calculateTotal = (items: CartItemType[]) =>
         items.reduce((acc: number, item) => acc + item.amount * item.price, 0);
-
+    const {cartItems} = useContext(Context);
     return (
         <Wrapper>
             <h2> Your shopping cart</h2>
@@ -22,8 +17,6 @@ const Cart: React.FC<CartProps> = ({ cartItems, addToCart, removeFromCart }: Car
                 <CartItem
                     key={item.id}
                     item={item}
-                    addToCart={addToCart}
-                    removeFromCart={removeFromCart}
                 />
             ))}
             <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
