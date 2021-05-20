@@ -2,13 +2,13 @@ import CartItem from '../CartItem/CartItem';
 
 import { Wrapper } from './Cart.styles';
 import { CartItemType } from '../App';
-import React, {useContext} from 'react';
-import {Context} from '../contexts/Context';
+import React from 'react';
+import {useCartContext} from '../contexts/Context';
 
 const Cart: React.FC = () => {
     const calculateTotal = (items: CartItemType[]) =>
         items.reduce((acc: number, item) => acc + item.amount * item.price, 0);
-    const {cartItems} = useContext(Context);
+    const {cartItems} = useCartContext();
     return (
         <Wrapper>
             <h2> Your shopping cart</h2>

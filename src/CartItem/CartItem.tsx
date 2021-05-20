@@ -1,6 +1,5 @@
 import Button from '@material-ui/core/Button';
-import {useContext} from 'react';
-import {Context} from '../contexts/Context';
+import {useCartContext} from '../contexts/Context';
 // Types
 import { CartItemType } from '../App';
 // Styles
@@ -11,7 +10,7 @@ type Props ={
 }
 
 const CartItem: React.FC<Props> = ({item}) => {
-    const {addToCart, removeFromCart} = useContext(Context);
+    const {addToCart, removeFromCart} = useCartContext();
     return (
         <Wrapper>
             <div>

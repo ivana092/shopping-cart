@@ -1,6 +1,5 @@
 import Button from '@material-ui/core/Button';
-import React, { useContext } from 'react';
-import {Context} from '../contexts/Context';
+import {useCartContext} from '../contexts/Context';
 // Types
 import { CartItemType } from '../App';
 // Styles
@@ -8,11 +7,10 @@ import {Wrapper} from './Item.styles';
 
 type ItemProps = {
     item : CartItemType;
-    //handleAddToCart : (clickedItem:CartItemType)=> void;
 }
 
 const Item: React.FC<ItemProps> = ({item}:ItemProps) => {
-    const {addToCart} = useContext(Context);
+    const {addToCart} = useCartContext();
     return (
         <Wrapper>
             <img src={item.image} alt={item.title} />
